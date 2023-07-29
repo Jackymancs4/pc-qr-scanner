@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leggi i QR</title>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+</head>
+
+<body>
+    <h2>Qui si scansiona il QR</h2>
+    <div style="width: 500px" id="reader"></div>
+
+    <br>
+    <h2>Qui viene mostrato il contenuto del QR</h2>
+    <div style="width: 500px" id="result">
+        Nessun risultato
+    </div>
+    <h2>Se presente un contenuto tabellare, qui compare una tabella modificabile</h2>
+    <div style="width: 500px" id="table"></div>
+    <h2>Per scaricare il file Excel</h2>
+    <a href="#">Download</a>
+</body>
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle on success condition with the decoded text or result.
+        console.log(`Scan result: ${decodedText}`, decodedResult);
+
+        let dumpArea = document.getElementById('result');
+        dumpArea.textContent(decodedText);
+    }
+
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 10, qrbox: 250 });
+        
+    html5QrcodeScanner.render(onScanSuccess);
+</script>
+</html>

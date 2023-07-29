@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea i QR da stampare</title>
+    <script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/shim.min.js"></script>
+    <script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://oss.sheetjs.com/assets/js/dropsheet.js"></script>
+</head>
+
+<body>
+    <h2>Qui si carica il file</h2>
+    <input type="file" id="my_file_input" />
+
+    <h2>Qui compare l'elenco dei QR</h2>
+    <div id='my_file_output'>
+        Nessun risultato
+    </div>
+    <h2>Stampare la pagina</h2>
+</body>
+<script>
+ /** Drop it like it's hot **/
+DropSheet({
+  file: _file,
+  drop: _target,
+  on: {
+    workstart: _workstart,
+    workend: _workend,
+    sheet: _onsheet,
+    foo: 'bar'
+  },
+  errors: {
+    badfile: _badfile,
+    pending: _pending,
+    failed: _failed,
+    large: _large,
+    foo: 'bar'
+  }
+})
+</script>
+</html>
