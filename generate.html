@@ -15,7 +15,19 @@
 
   <style>
     .qrcode {
+      position: relative;
+      width: fit-content;
       margin: 15px;
+    }
+
+    .qrcode_container {
+      width: 100vw;
+      border: solid 2px;
+      padding: 15px;
+      display: flex;
+      margin: 15px;
+      margin-right: 100px;
+      border-radius: 50px;
     }
   </style>
 </head>
@@ -93,6 +105,8 @@
 
   var _onsheet = function (json, sheetnames, select_sheet_cb) {
 
+    let stringValue = ""
+
     json.slice(0, 20).forEach(element => {
 
       if (element.length) {
@@ -101,21 +115,33 @@
         newQrCode.classList.add('qrcode')
         newQrCode.id = "qrcode_" + qrCodeCounter;
 
+        let newQrCodeText = document.createElement('div')
+        newQrCodeText.classList.add('qrcode_text')
+        newQrCodeText.id = "qrcode_text_" + qrCodeCounter;
+        newQrCodeText.innerHTML = "<h2>Gruppo Sanguigno " + element[element.length - 1] + " <br><br> C.F. " + element[element.length - 2] + "</h2>"
+
+        let newQrCodeContainer = document.createElement('div')
+        newQrCodeContainer.classList.add('qrcode_container')
+        newQrCodeContainer.id = "qrcode_container_" + qrCodeCounter;
+        newQrCodeContainer.appendChild(newQrCode)
+        newQrCodeContainer.appendChild(newQrCodeText)
+
         let grid = document.getElementById('grid')
-        grid.appendChild(newQrCode)
+        grid.appendChild(newQrCodeContainer)
 
         var qrcode = new QRCode("qrcode_" + qrCodeCounter, {
           text: element.join(','),
         });
+
+        stringValue += element.join(',') + "<br>"
 
         qrCodeCounter++;
       }
 
     });
 
-
     let aaa = document.getElementById('result')
-    aaa.textContent = json
+    aaa.innerHTML = stringValue
 
   };
 

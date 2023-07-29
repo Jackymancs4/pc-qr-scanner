@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leggi i QR</title>
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-
+    <script type="text/javascript" src="https//cdn.sheetjs.com/xlsx-latest/package/dist/shim.min.js"></script>
+    <script type="text/javascript" src="https//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <style>
+        #reader>div:first-child {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,11 +26,17 @@
     </div>
     <h2>Scansioni precedenti</h2>
     <div style="width: 500px" id="table"></div>
+    <h2>Per scaricare il file di testo</h2>
+    <button onclick="saveTextAsFile('table', 'download.txt')">Download</button>
     <h2>Per scaricare il file Excel</h2>
-    <button onclick="saveTextAsFile('table', 'download.csv')">Download</button>
+    <button onclick="doit('xlsx');">Download</button>
 
 </body>
 <script>
+
+    var aoa = [
+    ];
+
     function onScanSuccess(decodedText, decodedResult) {
         // Handle on success condition with the decoded text or result.
         console.log(`Scan result: ${decodedText}`, decodedResult);
@@ -36,6 +48,13 @@
 
             let historyArea = document.getElementById('table');
             historyArea.textContent = historyArea.textContent + '\n' + decodedText;
+
+            aoa.push(decodedText.split(','))
+
+            var ws = XLSX.utils.aoa_to_sheet(aoa);
+            var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table", editable: true });
+            document.getElementById("table").innerHTML = html_string;
+
         }
     }
 
@@ -69,6 +88,13 @@
 
         downloadLink.click();
     }
+
+    function doit(type, fn) {
+        var elt = document.getElementById('data-table');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "Sheet JS" });
+        XLSX.writeFile(wb, fn || ('SheetJSTableExport.' + (type || 'xlsx')));
+    }
+
 </script>
 
 </html>
