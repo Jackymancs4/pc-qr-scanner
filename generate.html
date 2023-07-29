@@ -12,6 +12,12 @@
     src="https://cdn.jsdelivr.net/npm/canvas-datagrid@0.4.6/dist/canvas-datagrid.min.js"></script>
   <script type="text/javascript" src="https://oss.sheetjs.com/assets/vendor/alertify.js"></script>
   <script type="text/javascript" src="//cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+  <style>
+    .qrcode {
+      margin: 15px;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,13 +26,15 @@
   <div id="drop">Drop a file here</div>
   <input type="file" id="file" value="" /><label for="file">... or click here to select a file</label>
 
-  <h2>Qui compare l'elenco dei QR</h2>
+  <h2>Qui compare l'elenco dei QR (per un massimo di 20)</h2>
 
   <div id='footnote'>
     Nessuna nota
   </div>
   <div id='grid'>
   </div>
+
+  <h2>Contenuto del file</h2>
   <div id='result'>
     Nessun risultato
   </div>
@@ -85,24 +93,26 @@
 
   var _onsheet = function (json, sheetnames, select_sheet_cb) {
 
-    json.forEach(element => {
+    json.slice(0, 20).forEach(element => {
 
-      let newQrCode = document.createElement('div')
-      newQrCode.classList.add('qrcode')
-      newQrCode.id = "qrcode_" + qrCodeCounter;
+      if (element.length) {
 
-      let grid = document.getElementById('grid')
-      grid.appendChild(newQrCode)
+        let newQrCode = document.createElement('div')
+        newQrCode.classList.add('qrcode')
+        newQrCode.id = "qrcode_" + qrCodeCounter;
 
-      var qrcode = new QRCode("qrcode_" + qrCodeCounter, {
-        text: element.join(','),
-      });
+        let grid = document.getElementById('grid')
+        grid.appendChild(newQrCode)
 
-      qrCodeCounter++;
+        var qrcode = new QRCode("qrcode_" + qrCodeCounter, {
+          text: element.join(','),
+        });
+
+        qrCodeCounter++;
+      }
 
     });
 
-    console.log(json);
 
     let aaa = document.getElementById('result')
     aaa.textContent = json
