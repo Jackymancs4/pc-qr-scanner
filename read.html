@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leggi i QR</title>
-    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script type="text/javascript" src="https//cdn.sheetjs.com/xlsx-latest/package/dist/shim.min.js"></script>
     <script type="text/javascript" src="https//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <style>
@@ -17,15 +17,15 @@
 
 <body>
     <h2>Qui si scansiona il QR</h2>
-    <div style="width: 500px" id="reader"></div>
+    <div style="width: 100%" id="reader"></div>
 
     <br>
     <h2>Contenuto dell'ultimo QR</h2>
-    <div style="width: 500px" id="result">
+    <div style="width: 100%" id="result">
         Nessun risultato
     </div>
     <h2>Scansioni precedenti</h2>
-    <div style="width: 500px" id="table"></div>
+    <div style="width: 100%" id="table"></div>
     <h2>Per scaricare il file di testo</h2>
     <button onclick="saveTextAsFile('table', 'download.txt')">Download</button>
     <h2>Per scaricare il file Excel</h2>
