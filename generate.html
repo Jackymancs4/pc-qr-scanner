@@ -5,15 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crea i QR da stampare</title>
-  <script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/shim.min.js"></script>
-  <script type="text/javascript" src="//cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-  <script type="text/javascript" src="dropsheet.js"></script>
-  <script type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/canvas-datagrid@0.4.6/dist/canvas-datagrid.min.js"></script>
-  <script type="text/javascript" src="https://oss.sheetjs.com/assets/vendor/alertify.js"></script>
-  <script type="text/javascript" src="//cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <script type="text/javascript" src="js/shim.min.js"></script>
+  <script type="text/javascript" src="js/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="js/dropsheet.js"></script>
+  <script type="text/javascript" src="js/canvas-datagrid.min.js"></script>
+  <script type="text/javascript" src="js/alertify.js"></script>
+  <script type="text/javascript" src="js/qrcode.min.js"></script>
 
   <style>
+    #grid {
+      display: grid;
+      position: relative;
+      grid-template-columns: 50% 50%;
+    }
+
     .qrcode {
       position: relative;
       width: fit-content;
@@ -21,13 +26,36 @@
     }
 
     .qrcode_container {
-      width: 100vw;
       border: solid 2px;
       padding: 15px;
       display: flex;
-      margin: 15px;
-      margin-right: 100px;
+      margin: 5px;
       border-radius: 50px;
+    }
+
+    @media print {
+
+      /* All your print styles go here */
+      .qrcode>img {
+        width: 3cm;
+      }
+
+      .qrcode_text>h2 {
+        font-size: small;
+      }
+
+      .qrcode_container {
+        border-radius: 20px;
+      }
+
+      body>h2,
+      body>input,
+      body>label,
+      #drop,
+      #footnote,
+      #result {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -35,8 +63,8 @@
 <body>
   <h2>Qui si carica il file</h2>
 
-  <div id="drop">Drop a file here</div>
-  <input type="file" id="file" value="" /><label for="file">... or click here to select a file</label>
+  <div id="drop">Trascina qui un file</div>
+  <input type="file" id="file" value="" /><label for="file">...o clicca qui per selezionarne uno</label>
 
   <h2>Qui compare l'elenco dei QR (per un massimo di 20)</h2>
 
